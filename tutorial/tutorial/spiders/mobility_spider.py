@@ -51,8 +51,15 @@ class MobilitySpider(scrapy.Spider):
             file_types = ('.xlsx', '.csv', '.pdf')
             for URL in URL_list:
                 if (URL.endswith(file_types)):
-                    links_to_save.append(dict(url=(http_begin + URL), category=cat))
-                    yield {
-                        'url' : http_begin + URL,
-                        'category': cat,
-                    }
+                    if 'http' in URL:
+                        links_to_save.append(dict(url=(URL), category=cat))
+                        yield {
+                            'url': URL,
+                            'category': cat,
+                        }
+                    else:
+                        links_to_save.append(dict(url=(URL), category=cat))
+                        yield {
+                            'url' : http_begin + URL,
+                            'category': cat,
+                        }

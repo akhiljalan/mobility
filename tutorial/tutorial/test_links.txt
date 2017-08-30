@@ -1,0 +1,837 @@
+
+<!DOCTYPE html>
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->  
+
+<!-- Include header -->
+<head>
+    <title>The Equality of Opportunity Project</title>
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">    
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link href='//fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'> 
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="/assets/plugins/bootstrap/css/bootstrap.min.css">
+    <!-- Plugins CSS -->    
+    <link rel="stylesheet" href="/assets/plugins/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="/assets/plugins/prism/prism.css">
+    <!-- Theme CSS -->  
+    <link id="theme-style" rel="stylesheet" href="/assets/css/styles_new_lato.css">
+    <!-- Magnific Popup core CSS file -->
+    <!-- <link rel="stylesheet" href="/assets/plugins/magnific-popup/magnific-popup.css"> -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body data-spy="scroll">
+
+<!-- ******GOOGLE ANALYTICS****** -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-88697181-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+<!-- ******HEADER****** -->
+<header id="header" class="header">  
+    <div class="container">            
+        <h1 class="logo pull-left">
+            <a href="/">
+                <span class="logo-title">The Equality of Opportunity Project</span>
+            </a>
+        </h1>            
+        <nav id="main-nav" class="main-nav navbar-right" role="navigation">
+            <div class="navbar-header">
+                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>           
+            <div class="navbar-collapse collapse" id="navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active nav-item sr-only"><a href="/">Home</a></li>
+                    <li class="nav-item "><a href="/documents/">Papers, Slides, and Summaries</a></li>
+                    <li class="nav-item current"><a href="/data/">Data</a></li>
+                    <li class="nav-item "><a href="/team/">Team</a></li>
+                    <li class="nav-item "><a href="/press/">Press</a></li>
+                    <li class="nav-item "><a href="/contact/">Contact</a></li>
+                    <li class="nav-item  last"><a href="/jobs/">Job Openings</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<!-- Javascript -->          
+<script type="text/javascript" src="/assets/plugins/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/assets/plugins/jquery.easing.1.3.js"></script>   
+<script type="text/javascript" src="/assets/plugins/bootstrap/js/bootstrap.min.js"></script>     
+<script type="text/javascript" src="/assets/plugins/jquery-scrollTo/jquery.scrollTo.min.js"></script> 
+<script type="text/javascript" src="/assets/plugins/prism/prism.js"></script>    
+<script type="text/javascript" src="/assets/js/main.js"></script>
+<script src="/assets/js/plotly-1.7.0.min.js"></script>
+
+<!-- Extra style for tables -->
+<style>
+	.table { font-size: 12px; }
+	.tcenter { text-align: center; vertical-align: middle; }
+	.table > tbody > tr > td { vertical-align: middle; }
+	.table > thead > th { background: f5f5f5; }
+</style>
+
+<!-- load FAQ stuff (move into separate files later) -->
+<script>
+/* load data on click */
+$(document).ready(function() {
+    $('.faq_question').click(function() {
+        if ($(this).parent().is('.open')) {
+            $(this).closest('.faq').find('.faq_answer_container').animate({'height':'0'},400);
+            $(this).closest('.faq').removeClass('open');
+		}
+		else {
+            var newHeight =$(this).closest('.faq').find('.faq_answer').height() +'px';
+            $(this).closest('.faq').find('.faq_answer_container').animate({'height':newHeight},400);
+            $(this).closest('.faq').addClass('open');
+        }
+    });
+});
+/* load data on URL */
+$(document).ready(function() {
+	var option = 'coke';
+	var url = window.location.href;
+	console.log(url);
+	option = url.match(/#(.*)/)[1];
+	console.log(option);
+	table_name = "data_" + option;
+	console.log(table_name);
+	var newHeight = $('#' + table_name).closest('.faq').find('.faq_answer').height() +'px';
+	$('#' + table_name).animate({'height':newHeight},400);
+    $('#' + table_name).closest('.faq').addClass('open');
+});
+</script>
+<!-- Style for figure dropdowns, based on FAQ styling -->
+<style>
+.faq { padding: 0px 0; margin-top: -10px; text-align: justify; font-size: 14px; }
+.faq p { text-align: justify; font-size: 14px; }
+.faq_question { max-width: 825px; margin: 0 auto; cursor: pointer; font-size: 13px; color: #29A1BB; }
+a.faq_question:hover { color: #78C0F0; background: none; }
+.faq_answer_container { height: 0px; max-width: 825px; overflow: hidden; padding: 0px; margin: 15px 0; text-align: justify; }
+.faq_answer { max-width: 825px; margin-top: 25px; margin-bottom: 10px; }
+.anchor{
+  display: block;
+  height: 75px; /*same height as header*/
+  margin-top: -75px; /*same height as header*/
+  visibility: hidden;
+}
+.plain .intro {
+  margin-top:10px !important;
+  margin-bottom: 10px !important;
+  text-align: justify;
+}
+</style>
+
+<div id="wrap" class="plainbg">
+<section class="plain section">
+<div class="container">
+<div class="plain-inner">
+			
+
+<div class="info">
+
+	<h2 class="firsttitle0 text-center"><b>Data and Replication Code</b></h2>
+
+	<p class="intro">
+		This page provides datasets containing key statistics as well as replication code for 
+		each of the papers released from the project. Documentation is provided in readme files or in 
+		the Excel version of each table. Please email <a href="mailto:info@equality-of-opportunity.org?Subject=Equality of Opportunity Data" target="_top">info@equality-of-opportunity.org</a> if you 
+		need technical assistance in using these data or programs.
+	</p>
+	
+	<span class="anchor" id="college"></span>
+	<p class="intro">
+		<b>Mobility Report Cards: The Role of Colleges in Intergenerational Mobility</b><br>
+		Chetty, Friedman, Saez, Turner, and Yagan (2017)<br>
+		Mobility Statistics and Student Outcomes by College and Birth Cohort
+		<div class="faq_container">
+			<div class="faq">
+				<div class="faq_question">Click to view data <b class="caret"></b></div>
+					<div class="faq_answer_container" id="data_college">
+						<div class="faq_answer">
+							<div class="info" style="margin-top: -25px;">
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th>Data Description</th>
+											<th colspan="3" class="text-center">Download</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td style="width:76%">Online Data Table 1<br>Preferred Estimates of Access and Mobility Rates by College</td>
+											<td style="width:8%" class="tcenter"><a href="/data/college/mrc_table1.dta" target="_blank">Stata</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/college/mrc_table1.csv" target="_blank">Excel</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/college/Codebook MRC Table 1.pdf" target="_blank">Readme</a></td>
+										</tr>
+										<tr>
+											<td style="width:76%">Online Data Table 2<br>Baseline Cross-Sectional Estimates by College</td>
+											<td style="width:8%" class="tcenter"><a href="/data/college/mrc_table2.dta" target="_blank">Stata</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/college/mrc_table2.csv" target="_blank">Excel</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/college/Codebook MRC Table 2.pdf" target="_blank">Readme</a></td>
+										</tr>
+										<tr>
+											<td style="width:76%">Online Data Table 3<br>Baseline Longitudinal Estimates by College and Child's Cohort</td>
+											<td style="width:8%" class="tcenter"><a href="/data/college/mrc_table3.dta" target="_blank">Stata</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/college/mrc_table3.csv" target="_blank">Excel</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/college/Codebook MRC Table 3.pdf" target="_blank">Readme</a></td>
+										</tr>
+										<tr>
+											<td style="width:76%">Online Data Table 4<br>Cross-Sectional Estimates by College: Heterogeneity by Gender and Alternative College and Income Definitions</td>
+											<td style="width:8%" class="tcenter"><a href="/data/college/mrc_table4.dta" target="_blank">Stata</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/college/mrc_table4.csv" target="_blank">Excel</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/college/Codebook MRC Table 4.pdf" target="_blank">Readme</a></td>
+										</tr>
+										<tr>
+											<td style="width:76%">Online Data Table 5<br>Longitudinal Estimates by College and Cohort: Heterogeneity by Gender and Alternative College and Income Definitions</td>
+											<td style="width:8%" class="tcenter"><a href="/data/college/mrc_table5.dta" target="_blank">Stata</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/college/mrc_table5.csv" target="_blank">Excel</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/college/Codebook MRC Table 5.pdf" target="_blank">Readme</a></td>
+										</tr>
+										<tr>
+											<td style="width:76%">Online Data Table 6<br>Cross-Sectional Statistics by College Tier and Parent Income Percentile</td>
+											<td style="width:8%" class="tcenter"><a href="/data/college/mrc_table6.dta" target="_blank">Stata</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/college/mrc_table6.csv" target="_blank">Excel</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/college/Codebook MRC Table 6.pdf" target="_blank">Readme</a></td>
+										</tr>
+										<tr>
+											<td style="width:76%">Online Data Table 7<br>Cross-Sectional Statistics on Children’s Income Distributions by College Tier</td>
+											<td style="width:8%" class="tcenter"><a href="/data/college/mrc_table7.dta" target="_blank">Stata</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/college/mrc_table7.csv" target="_blank">Excel</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/college/Codebook MRC Table 7.pdf" target="_blank">Readme</a></td>
+										</tr>
+										<tr>
+											<td style="width:76%">Online Data Table 8<br>Longitudinal Statistics by College Tier, Parent Income Ventile, and Cohort</td>
+											<td style="width:8%" class="tcenter"><a href="/data/college/mrc_table8.dta" target="_blank">Stata</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/college/mrc_table8.csv" target="_blank">Excel</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/college/Codebook MRC Table 8.pdf" target="_blank">Readme</a></td>
+										</tr>
+										<tr>
+											<td style="width:76%">Online Data Table 9<br>Percentile Cutoffs for Parent and Child Income by Birth Cohort</td>
+											<td style="width:8%" class="tcenter"><a href="/data/college/mrc_table9.dta" target="_blank">Stata</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/college/mrc_table9.csv" target="_blank">Excel</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/college/Codebook MRC Table 9.pdf" target="_blank">Readme</a></td>
+										</tr>
+										<tr>
+											<td style="width:76%">Online Data Table 10<br>College Level Characteristics</td>
+											<td style="width:8%" class="tcenter"><a href="/data/college/mrc_table10.dta" target="_blank">Stata</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/college/mrc_table10.csv" target="_blank">Excel</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/college/Codebook MRC Table 10.pdf" target="_blank">Readme</a></td>
+										</tr>
+										<tr>
+											<td style="width:76%">Online Data Table 11<br>Crosswalk from College-Level OPEIDs to Super-OPEID Groups</td>
+											<td style="width:8%" class="tcenter"><a href="/data/college/mrc_table11.dta" target="_blank">Stata</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/college/mrc_table11.csv" target="_blank">Excel</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/college/Codebook MRC Table 11.pdf" target="_blank">Readme</a></td>
+										</tr>
+										<tr>
+											<td style="width:76%">Replication Code and Datasets</td>
+											<td style="width:24%" colspan="3" class="tcenter"><a href="/data/college/replicate.zip" target="_blank">ZIP</a></td>
+										</tr>
+								  </tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+			</div>
+		</div>
+	</p>
+
+	<span class="anchor" id="absolute"></span>
+	<p class="intro">
+		<b>The Fading American Dream: Trends in Absolute Income Mobility Since 1940</b><br>
+		Chetty, Grusky, Hell, Hendren, Manduca, and Narang (2016)<br>
+		Absolute Mobility Estimates and Counterfactuals by Cohort, Parent Income, and State
+		<div class="faq_container">
+			<div class="faq">
+				<div class="faq_question">Click to view data <b class="caret"></b></div>
+					<div class="faq_answer_container" id="data_absolute">
+						<div class="faq_answer">
+							<div class="info" style="margin-top: -25px;">
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th>Data Description</th>
+											<th colspan="3" class="text-center">Download</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td style="width:76%">Online Data Table 1<br>Baseline Estimates of Absolute Mobility by Parent Income Percentile and Child Birth Cohort</td>
+											<td style="width:8%" class="tcenter"><a href="/data/absolute/table1_national_absmob_by_cohort_parpctile.dta" target="_blank">Stata</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/absolute/table1_national_absmob_by_cohort_parpctile.xlsx" target="_blank">Excel</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/absolute/Online Table 1 Readme.pdf" target="_blank">Readme</a></td>
+										</tr>
+										<tr>
+											<td style="width:76%">Online Data Table 2<br>Absolute Mobility by Child Birth Cohort and State</td>
+											<td style="width:8%" class="tcenter"><a href="/data/absolute/table2_state_absmob_by_cohort.dta" target="_blank">Stata</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/absolute/table2_state_absmob_by_cohort.xlsx" target="_blank">Excel</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/absolute/Online Table 2 Readme.pdf" target="_blank">Readme</a></td>
+										</tr>
+										<tr>
+											<td style="width:76%">Online Data Table 3<br>Absolute Mobility by Child Birth Cohort, Parent Income Percentile, and Gender</td>
+											<td style="width:8%" class="tcenter"><a href="/data/absolute/table3_absmob_by_cohort_parpctile_gnd.dta" target="_blank">Stata</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/absolute/table3_absmob_by_cohort_parpctile_gnd.xlsx" target="_blank">Excel</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/absolute/Online Table 3 Readme.pdf" target="_blank">Readme</a></td>
+										</tr>
+										<tr>
+											<td style="width:76%">Online Data Table 4<br>Alternative Estimates of Absolute Mobility by Birth Cohort</td>
+											<td style="width:8%" class="tcenter"><a href="/data/absolute/table4_robustness_by_cohort.dta" target="_blank">Stata</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/absolute/table4_robustness_by_cohort.xlsx" target="_blank">Excel</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/absolute/Online Table 4 Readme.pdf" target="_blank">Readme</a></td>
+										</tr>
+										<tr>
+											<td style="width:76%">Online Data Table 5<br>Counterfactuals by Parent Income Percentile</td>
+											<td style="width:8%" class="tcenter"><a href="/data/absolute/table5_counterfactuals_by_par_pctile.dta" target="_blank">Stata</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/absolute/table5_counterfactuals_by_par_pctile.xlsx" target="_blank">Excel</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/absolute/Online Table 5 Readme.pdf" target="_blank">Readme</a></td>
+										</tr>
+										<tr>
+											<td style="width:76%">Online Data Table 6<br>Levels of Child and Parent Income by Income Percentile and Child Birth Cohort</td>
+											<td style="width:8%" class="tcenter"><a href="/data/absolute/table6_income_levels_by_cohort_parpctile.dta" target="_blank">Stata</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/absolute/table6_income_levels_by_cohort_parpctile.xlsx" target="_blank">Excel</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/absolute/Online Table 6 Readme.pdf" target="_blank">Readme</a></td>
+										</tr>
+										<tr>
+											<td style="width:76%">Online Data Table 7<br>Rank Required to Beat Parent by Child Birth Cohort and Parent Income Percentile</td>
+											<td style="width:8%" class="tcenter"><a href="/data/absolute/table7_req_rank_by_cohort_parpctile.dta" target="_blank">Stata</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/absolute/table7_req_rank_by_cohort_parpctile.xlsx" target="_blank">Excel</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/absolute/Online Table 7 Readme.pdf" target="_blank">Readme</a></td>
+										</tr>
+										<tr>
+											<td style="width:76%">Online Data Table 8<br>Copula for 1980-82 Birth Cohorts</td>
+											<td style="width:8%" class="tcenter"><a href="/data/absolute/table8_base_copula.dta" target="_blank">Stata</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/absolute/table8_base_copula.xlsx" target="_blank">Excel</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/absolute/Online Table 8 Readme.pdf" target="_blank">Readme</a></td>
+										</tr>
+										<tr>
+											<td style="width:76%">Replication Code and Datasets</td>
+											<td style="width:24%" colspan="3" class="tcenter"><a href="/data/absolute/replicate.zip" target="_blank">ZIP</a></td>
+										</tr>
+								  </tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+			</div>
+		</div>
+	</p>
+
+
+
+
+	<span class="anchor" id="movers"></span>
+	<p class="intro">
+		<b>The Effects of Neighborhoods on Intergenerational Mobility</b><br>
+		Chetty and Hendren (2017)<br>
+		Causal Effects, Mobility Estimates and Covariates by County, CZ, and Birth Cohort
+		<div class="faq_container">
+			<div class="faq">
+				<div class="faq_question">Click to view data <b class="caret"></b></div>
+					<div class="faq_answer_container" id="data_movers">
+						<div class="faq_answer">
+							<div class="info" style="margin-top: -25px;">
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th>Data Description</th>
+											<th colspan="3" class="text-center">Download</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td style="width:76%">Online Data Table 1<br>Preferred Estimates of Causal Place Effects by Commuting Zone</td>
+											<td style="width:8%" class="tcenter"><a href="/data/neighborhoods/online_table1.dta" target="_blank">Stata</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/neighborhoods/online_table1.xlsx" target="_blank">Excel</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/neighborhoods/online_table1.pdf" target="_blank">Readme</a></td>
+										</tr>
+										<tr>
+											<td style="width:76%">Online Data Table 2<br>Preferred Estimates of Causal Place Effects by County</td>
+											<td style="width:8%" class="tcenter"><a href="/data/neighborhoods/online_table2.dta" target="_blank">Stata</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/neighborhoods/online_table2.xlsx" target="_blank">Excel</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/neighborhoods/online_table2.pdf" target="_blank">Readme</a></td>
+										</tr>
+										<tr>
+											<td style="width:76%">Online Data Table 3<br>Complete CZ-Level Dataset: Causal Effects and Covariates</td>
+											<td style="width:8%" class="tcenter"><a href="/data/neighborhoods/online_table3.dta" target="_blank">Stata</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/neighborhoods/online_table3.xlsx" target="_blank">Excel</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/neighborhoods/online_table3.pdf" target="_blank">Readme</a></td>
+										</tr>
+										<tr>
+											<td style="width:76%">Online Data Table 4<br>Complete County-Level Dataset: Causal Effects and Covariates</td>
+											<td style="width:8%" class="tcenter"><a href="/data/neighborhoods/online_table4.dta" target="_blank">Stata</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/neighborhoods/online_table4.xlsx" target="_blank">Excel</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/neighborhoods/online_table4.pdf" target="_blank">Readme</a></td>
+										</tr>
+										<tr>
+											<td style="width:76%">Online Data Table 5<br>Pairwise Place Effects by Origin-Destination Pairs of Commuting Zones</td>
+											<td style="width:8%" class="tcenter"><a href="/data/neighborhoods/online_table5.dta" target="_blank">Stata</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/neighborhoods/online_table5.xls" target="_blank">Excel</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/neighborhoods/online_table5.pdf" target="_blank">Readme</a></td>
+										</tr>
+										<tr>
+											<td style="width:76%">Online Data Table 6<br>Parent Income Distribution by Child's Birth Cohort</td>
+											<td style="width:8%" class="tcenter"><a href="/data/neighborhoods/online_table6.dta" target="_blank">Stata</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/neighborhoods/online_table6.xls" target="_blank">Excel</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/neighborhoods/online_table6.pdf" target="_blank">Readme</a></td>
+										</tr>
+										<tr>
+											<td style="width:76%">Replication Code and Datasets</td>
+											<td style="width:24%" colspan="3" class="tcenter"><a href="/data/neighborhoods/replicate.zip" target="_blank">ZIP</a></td>
+										</tr>
+								  </tbody>
+								</table>
+								<p><i>Note: Legacy replication code and data for the 2016 working papers can be downloaded <a href="/data/causal/replicate.zip" target="_blank">here</a> (ZIP).</i></p>
+							</div>
+						</div>
+					</div>
+			</div>
+		</div>
+	</p>
+
+	
+
+
+	<span class="anchor" id="gender"></span>
+	<p class="intro">
+		<b>Childhood Environment and Gender Gaps in Adulthood</b><br>
+		Chetty, Hendren, Lin, Majerovitz, and Scuderi (2016)<br>
+		Employment Rates and Earnings by Gender, Parent Income, and Area
+		<div class="faq_container">
+			<div class="faq">
+				<div class="faq_question">Click to view data <b class="caret"></b></div>
+					<div class="faq_answer_container" id="data_gender">
+						<div class="faq_answer">
+							<div class="info" style="margin-top: -25px;">
+								<table class="table table-bordered">
+									<thead class="thead-default">
+										<tr>
+											<th>Data Description</th>
+											<th colspan="3" class="text-center">Download</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td style="width:76%">Online Data Table 1<br>CZ-level Employment Rates by Gender and Parent Income Quintile and other CZ Covariates</td>
+											<td style="width:8%" class="tcenter"><a href="/data/gender/table1/gender_cz.dta" target="_blank">Stata</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/gender/table1/gender_cz.xls" target="_blank">Excel</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/gender/table1/gender_cz_readme.pdf"" target="_blank">Readme</a></td>
+										</tr>
+										<tr>
+											<td style="width:76%">Online Data Table 2<br>County-level Employment Rates by Gender and Parent Income Quintile and other County Covariates</td>
+											<td style="width:8%" class="tcenter"><a href="/data/gender/table2/gender_cty.dta" target="_blank">Stata</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/gender/table2/gender_cty.xls" target="_blank">Excel</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/gender/table2/gender_cty_readme.pdf" target="_blank">Readme</a></td>
+										</tr>
+										<tr>
+											<td style="width:76%">Online Data Table 3<br>National Employment Rates, Earnings, and Other Outcomes by Parent Percentile and Gender</td>
+											<td style="width:8%" class="tcenter"><a href="/data/gender/table3/gender_nat.dta" target="_blank">Stata</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/gender/table3/gender_nat.xls" target="_blank">Excel</a></td>
+											<td style="width:8%" class="tcenter"><a href="/data/gender/table3/gender_nat_readme.pdf" target="_blank">Readme</a></td>
+										</tr>
+								  </tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+			</div>
+		</div>
+	</p>
+
+	
+	
+	<span class="anchor" id="health"></span>
+	<p class="intro">
+		<b>The Association Between Income and Life Expectancy in the United States, 2001-2014</b><br>
+		Chetty, Stepner, Abraham, Lin, Scuderi, Turner, Bergeron, and Cutler (2016)<br>
+		Health Statistics by State, County, and Commuting Zone
+	</p>
+	<div class="faq_container">
+		<div class="faq">
+			<div class="faq_question">Click to view data <b class="caret"></b></div>
+				<div class="faq_answer_container" id="data_health">
+					<div class="faq_answer">
+						<div class="info" style="margin-top: -25px;">
+							<table class="table table-bordered">
+								<thead class="thead-default">
+									<tr>
+										<th>Table #</th>
+										<th>Geography</th>
+										<th>Contents</th>
+										<th>Aggregation</th>
+										<th colspan="3" class="text-center">Download</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td style="width:8%">1</td>
+										<td style="width:10%">National</td>
+										<td style="width:29%">Life expectancy estimates</td>
+										<td style="width:29%">Gender-income percentile</td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_1.dta" target="_blank">Stata</a></td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_1.csv" target="_blank">CSV</a></td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_1_readme.pdf" target="_blank">Readme</a></td>
+									</tr>
+									<tr>
+										
+										<td style="width:8%">2</td>
+										<td style="width:10%">National</td>
+										<td style="width:29%">Life expectancy estimates</td>
+										<td style="width:29%">Year-gender-income percentile</td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_2.dta" target="_blank">Stata</a></td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_2.csv" target="_blank">CSV</a></td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_2_readme.pdf" target="_blank">Readme</a></td>
+									</tr>
+									<tr>
+										
+										<td style="width:8%">3</td>
+										<td style="width:10%">State</td>
+										<td style="width:22%">Life expectancy estimates</td>
+										<td style="width:22%">State-gender-income percentile</td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_3.dta" target="_blank">Stata</a></td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_3.csv" target="_blank">CSV</a></td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_3_readme.pdf" target="_blank">Readme</a></td>
+									</tr>
+									<tr>
+										
+										<td style="width:8%">4</td>
+										<td style="width:10%">National</td>
+										<td style="width:29%">Life expectancy estimates</td>
+										<td style="width:29%">State-gender-income quartile</td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_4.dta" target="_blank">Stata</a></td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_4.csv" target="_blank">CSV</a></td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_4_readme.pdf" target="_blank">Readme</a></td>
+									</tr>
+									<tr>
+										<td style="width:8%">5</td>
+										<td style="width:10%">State</td>
+										<td style="width:29%">Life expectancy estimates</td>
+										<td style="width:29%">State-year-gender-income quartile</td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_5.dta" target="_blank">Stata</a></td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_5.csv" target="_blank">CSV</a></td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_5_readme.pdf" target="_blank">Readme</a></td>
+									</tr>
+									<tr>
+										<td style="width:8%">6</td>
+										<td style="width:10%">CZ</td>
+										<td style="width:29%">Life expectancy estimates</td>
+										<td style="width:29%">CZ-gender-income quartile</td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_6.dta" target="_blank">Stata</a></td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_6.csv" target="_blank">CSV</a></td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_6_readme.pdf" target="_blank">Readme</a></td>
+									</tr>
+									<tr>
+										<td style="width:8%">7</td>
+										<td style="width:10%">CZ</td>
+										<td style="width:29%">Life expectancy estimates</td>
+										<td style="width:29%">CZ-gender-income ventile</td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_7.dta" target="_blank">Stata</a></td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_7.csv" target="_blank">CSV</a></td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_7_readme.pdf" target="_blank">Readme</a></td>
+									</tr>
+									<tr>
+										<td style="width:8%">8</td>
+										<td style="width:10%">CZ</td>
+										<td style="width:29%">Life expectancy trends estimates</td>
+										<td style="width:29%">CZ-gender-income quartile</td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_8.dta" target="_blank">Stata</a></td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_8.csv" target="_blank">CSV</a></td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_8_readme.pdf" target="_blank">Readme</a></td>
+									</tr>
+									<tr>
+										<td style="width:8%">9</td>
+										<td style="width:10%">CZ</td>
+										<td style="width:29%">Life expectancy estimates</td>
+										<td style="width:29%">CZ-year-gender-income quartile</td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_9.dta" target="_blank">Stata</a></td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_9.csv" target="_blank">CSV</a></td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_9_readme.pdf" target="_blank">Readme</a></td>
+									</tr>
+									<tr>
+										<td style="width:8%">10</td>
+										<td style="width:10%">CZ</td>
+										<td style="width:29%">Characteristics (described in eTable 9)</td>
+										<td style="width:29%">CZ</td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_10.dta" target="_blank">Stata</a></td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_10.csv" target="_blank">CSV</a></td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_10_readme.pdf" target="_blank">Readme</a></td>
+									</tr>
+									<tr>
+										<td style="width:8%">11</td>
+										<td style="width:10%">County</td>
+										<td style="width:29%">Life expectancy esitmates</td>
+										<td style="width:29%">County-gender-income quartile</td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_11.dta" target="_blank">Stata</a></td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_11.csv" target="_blank">CSV</a></td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_11_readme.pdf" target="_blank">Readme</a></td>
+									</tr>
+									<tr>
+										<td style="width:8%">12</td>
+										<td style="width:10%">County</td>
+										<td style="width:29%">Characteristics (described in eTable 9)</td>
+										<td style="width:29%">County</td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_12.dta" target="_blank">Stata</a></td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_12.csv" target="_blank">CSV</a></td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_12_readme.pdf" target="_blank">Readme</a></td>
+									</tr>
+									<tr>
+										<td style="width:8%">13</td>
+										<td style="width:10%">International</td>
+										<td style="width:29%">Mean life expectancy at age 40</td>
+										<td style="width:29%">Country-gender</td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_13.dta" target="_blank">Stata</a></td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_13.csv" target="_blank">CSV</a></td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_13_readme.pdf" target="_blank">Readme</a></td>
+									</tr>
+									<tr>
+										<td style="width:8%">14</td>
+										<td style="width:10%">National</td>
+										<td style="width:29%">Population and death counts in tax data and NCHS data</td>
+										<td style="width:29%">Gender-age-year</td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_14.dta" target="_blank">Stata</a></td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_14.csv" target="_blank">CSV</a></td>
+										<td style="width:8%" class="tcenter"><a href="/data/health/health_ineq_online_table_14_readme.pdf" target="_blank">Readme</a></td>
+									</tr>
+									<tr>
+										<td style="width:8%">15</td>
+										<td style="width:10%">National</td>
+										<td style="width:29%">Mortality rates</td>
+										<td style="width:29%">Gender-age-year-income percentile</td>
+										<td style="width:8%" class="tcenter"><a href="https://healthinequality.org/dl/health_ineq_online_table_15.dta" target="_blank">Stata</a></td>
+										<td style="width:8%" class="tcenter"><a href="https://healthinequality.org/dl/health_ineq_online_table_15.csv" target="_blank">CSV</a></td>
+										<td style="width:8%" class="tcenter"><a href="https://healthinequality.org/dl/health_ineq_online_table_15_readme.pdf" target="_blank">Readme</a></td>
+									</tr>
+									<tr>
+										<td style="width:76%" colspan="4">Complete Set of Formatted Data Tables with Codebook</td>
+										<td style="width:24%" colspan="3" class="tcenter"><a href="https://healthinequality.org/dl/health_ineq_all_online_tables.xlsx" target="_blank">Excel</a></td>
+									</tr>
+									<tr>
+										<td style="width:76%" colspan="4">Complete Set of Unformatted Data Tables</td>
+										<td style="width:24%" colspan="3" class="tcenter"><a href="https://healthinequality.org/dl/health_ineq_all_online_tables_raw.xlsx" target="_blank">Excel</a></td>
+									</tr>
+									<tr>
+										<td style="width:76%" colspan="4">Crosswalk between Commuting Zones and Counties (1990 Boundaries)</td>
+										<td style="width:24%" colspan="3" class="tcenter"><a href="/data/health/cty_cz_st_crosswalk.csv" target="_blank">CSV</a></td>
+									</tr>
+									<tr>
+										<td style="width:76%" colspan="4">Data for Figures, Tables, and Numbers in Text of JAMA Manuscript</td>
+										<td style="width:24%" colspan="3" class="tcenter"><a href="https://healthinequality.org/dl/healthineq_results.zip" target="_blank">ZIP</a></td>
+									</tr>
+									<tr>
+										<td style="width:76%" colspan="4">Replication Code and Data</td>
+										<td style="width:24%" colspan="3" class="tcenter">
+											<a href="https://github.com/michaelstepner/healthinequality-code" target="_blank">Code and Instructions</a><br>
+											<a href="https://healthinequality.org/replication/health_ineq_replication_dataonly.zip" target="_blank">Data Only (ZIP, 1GB)</a><br>
+											<a href="https://healthinequality.org/replication/health_ineq_replication_dataandresults.zip" target="_blank">Data and Results (ZIP, 3GB)</a><br>
+										</td>
+									</tr>
+							  </tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+		</div>
+	</div>
+
+	
+	
+	<span class="anchor" id="teachers"></span>
+	<p class="intro">
+		<b>Measuring the Impacts of Teachers I and II: Evaluating Bias in Teacher Value-Added Estimates and Teacher Value-Added and Student Outcomes in Adulthood</b><br>
+		Chetty, Friedman, and Rockoff (2014)<br>
+		Replication Code
+	</p>
+	<div class="faq_container">
+		<div class="faq">
+			<div class="faq_question">Click to view data <b class="caret"></b></div>
+				<div class="faq_answer_container" id="data_teachers">
+					<div class="faq_answer">
+						<div class="info" style="margin-top: -25px;">
+							<table class="table table-bordered">
+								<thead class="thead-default">
+									<tr>
+										<th>Data Description</th>
+										<th colspan="1" class="text-center">Download</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td style="width:76%">Replication Code</td>
+										<td style="width:24%" class="tcenter"><a href="/data/teachers/cfr_analysis_code.zip" target="_blank">ZIP</a></td>
+									</tr>
+							  </tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+		</div>
+	</div>
+
+	
+	
+	<span class="anchor" id="trends"></span>
+	<p class="intro">
+		<b>Is the United States Still a Land of Opportunity? Recent Trends in Intergenerational Mobility</b><br>
+		Chetty, Hendren, Kline, Saez, and Turner (2014)<br>
+		Trends in Intergenerational Mobility by Commuting Zone
+	</p>
+	<div class="faq_container">
+		<div class="faq">
+			<div class="faq_question">Click to view data <b class="caret"></b></div>
+				<div class="faq_answer_container" id="data_trends">
+					<div class="faq_answer">
+						<div class="info" style="margin-top: -25px;">
+							<table class="table table-bordered">
+								<thead class="thead-default">
+									<tr>
+										<th>Data Description</th>
+										<th colspan="3" class="text-center">Download</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td style="width:76%">Online Data Table 1<br>Intergenerational Mobility Estimates by Commuting Zone and Birth Cohort</td>
+										<td style="width:12%" class="tcenter"><a href="/data/trends/onlinedata1_trends.dta" target="_blank">Stata</a></td>
+										<td style="width:12%" class="tcenter"><a href="/data/trends/onlinedata1_trends.xls" target="_blank">Excel</a></td>
+									</tr>
+									<tr>
+										<td style="width:76%">Appendix Tables<br>Estimates Underlying the Figures in Paper</td>
+										<td style="width:12%" class="tcenter"></td>
+										<td style="width:12%" class="tcenter"><a href="/data/trends/app_tables.xls" target="_blank">Excel</a></td>
+									</tr>
+									<tr>
+										<td style="width:76%">Intergenerational Mobility Estimates by County and Birth Cohort</td>
+										<td style="width:12%" class="tcenter"><a href="/data/trends/county_cohort_trends.dta" target="_blank">Stata</a></td>
+										<td style="width:12%" class="tcenter"></td>
+									</tr>
+							  </tbody>
+							</table>
+							<p class="intro" style="margin-top: -15px;">Note: Documentation is provided in the Excel version of each dataset.</p>
+						</div>
+					</div>
+				</div>
+		</div>
+	</div>
+
+
+	<span class="anchor" id="ige"></span>
+	<p class="intro">
+		<b>Where is the Land of Opportunity? The Geography of Intergenerational Mobility in the United States</b><br>
+		Chetty, Hendren, Kline and Saez (2014)<br>
+		Descriptive Statistics by County and Commuting Zone
+	</p>
+	<div class="faq_container">
+		<div class="faq">
+			<div class="faq_question">Click to view data <b class="caret"></b></div>
+				<div class="faq_answer_container" id="data_ige">
+					<div class="faq_answer">
+						<div class="info" style="margin-top: -25px;">
+							<table class="table table-bordered">
+								<thead class="thead-default">
+									<tr>
+										<th>Data Description</th>
+										<th colspan="2" class="text-center">Download</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td style="width:76%">Preferred Mobility Measures By Commuting Zone</td>
+										<td style="width:12%" class="tcenter"><a href="/data/descriptive/preferred/preferred_measures.dta" target="_blank">Stata</a></td>
+										<td style="width:12%" class="tcenter"><a href="/data/descriptive/preferred/preferred_measures.xlsx" target="_blank">Excel</a></td>
+									</tr>
+									<tr>
+										<td style="width:76%">Online Data Table 1<br>National 100 by 100 Transition Matrix</td>
+										<td style="width:12%" class="tcenter"><a href="/data/descriptive/table1/onlinedata1.dta" target="_blank">Stata</a></td>
+										<td style="width:12%" class="tcenter"><a href="/data/descriptive/table1/online_data_tables.xls" target="_blank">Excel</a></td>
+									</tr>
+									<tr>
+										<td style="width:76%">Online Data Table 2<br>Marginal Income Distributions by Centile</td>
+										<td style="width:12%" class="tcenter"><a href="/data/descriptive/table2/onlinedata2.dta" target="_blank">Stata</a></td>
+										<td style="width:12%" class="tcenter"><a href="/data/descriptive/table1/online_data_tables.xls" target="_blank">Excel</a></td>
+									</tr>
+									<tr>
+										<td style="width:76%">Online Data Table 3<br>Intergenerational Mobility Statistics and Selected Covariates by County</td>
+										<td style="width:12%" class="tcenter"><a href="/data/descriptive/table3/onlinedata3.dta" target="_blank">Stata</a></td>
+										<td style="width:12%" class="tcenter"><a href="/data/descriptive/table1/online_data_tables.xls" target="_blank">Excel</a></td>
+									</tr>
+									<tr>
+										<td style="width:76%">Online Data Table 4<br>Intergenerational Mobility Statistics by Metropolitan Statistical Area</td>
+										<td style="width:12%" class="tcenter"><a href="/data/descriptive/table4/onlinedata4.dta" target="_blank">Stata</a></td>
+										<td style="width:12%" class="tcenter"><a href="/data/descriptive/table1/online_data_tables.xls" target="_blank">Excel</a></td>
+									</tr>
+									<tr>
+										<td style="width:76%">Online Data Table 5<br>Intergenerational Mobility Statistics by Commuting Zone</td>
+										<td style="width:12%" class="tcenter"><a href="/data/descriptive/table5/onlinedata5.dta" target="_blank">Stata</a></td>
+										<td style="width:12%" class="tcenter"><a href="/data/descriptive/table1/online_data_tables.xls" target="_blank">Excel</a></td>
+									</tr>
+									<tr>
+										<td style="width:76%">Online Data Table 6<br>Quintile-Quintile Transition Matrices by Commuting Zone</td>
+										<td style="width:12%" class="tcenter"><a href="/data/descriptive/table6/onlinedata6.dta" target="_blank">Stata</a></td>
+										<td style="width:12%" class="tcenter"><a href="/data/descriptive/table1/online_data_tables.xls" target="_blank">Excel</a></td>
+									</tr>
+									<tr>
+										<td style="width:76%">Online Data Table 7<br>Income Distributions by Commuting Zone</td>
+										<td style="width:12%" class="tcenter"><a href="/data/descriptive/table7/onlinedata7.dta" target="_blank">Stata</a></td>
+										<td style="width:12%" class="tcenter"><a href="/data/descriptive/table1/online_data_tables.xls" target="_blank">Excel</a></td>
+									</tr>
+									<tr>
+										<td style="width:76%">Online Data Table 8<br>Commuting Zone Characteristics</td>
+										<td style="width:12%" class="tcenter"><a href="/data/descriptive/table8/onlinedata8.dta" target="_blank">Stata</a></td>
+										<td style="width:12%" class="tcenter"><a href="/data/descriptive/table1/online_data_tables.xls" target="_blank">Excel</a></td>
+									</tr>
+									<tr>
+										<td style="width:76%">Online Data Table 9<br>Commuting Zone Characteristics - Definitions and Data Sources</td>
+										<td style="width:12%" class="tcenter"></td>
+										<td style="width:12%" class="tcenter"><a href="/data/descriptive/table1/online_data_tables.xls" target="_blank">Excel</a></td>
+									</tr>
+									<tr>
+										<td style="width:76%">Online Data Table 10<br>National Statistics by Parent or Child Income Percentile</td>
+										<td style="width:12%" class="tcenter"></td>
+										<td style="width:12%" class="tcenter"><a href="/data/descriptive/national/Statistics_By_Parent_or_child_Income_Percentile.xlsx" target="_blank">Excel</a></td>
+									</tr>
+									<tr>
+										<td style="width:76%">Replication Code and Datasets</td>
+										<td style="width:24%" colspan="2" class="tcenter"><a href="/data/descriptive/replicate_2014.zip" target="_blank">ZIP</a></td>
+									</tr>
+									<tr>
+										<td style="width:76%">High-Resolution Map of Upward Mobility Rates by CZ</td>
+										<td style="width:24%" colspan="2" class="tcenter"><a href="/assets/map_prob_p1_k5.png" target="_blank">JPG</a></td>
+									</tr>
+							  </tbody>
+							</table>
+							<p class="intro" style="margin-top: -15px;">Note: Documentation is provided in the Excel version of each dataset.</p>
+						</div>
+					</div>
+				</div>
+		</div>
+	</div>
+	
+</div>
+
+<br><br><br><br>
+
+	</body>
+
+</html> 

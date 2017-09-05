@@ -22,7 +22,8 @@ for dict in links_dicts:
     try:
         urllib.request.urlretrieve(file_url, filepath)
     except urllib.request.HTTPError as err:
-        print(err.code)
-        print(err.read())
+        print(filepath, ' failed')
+        # print(err.code)
+        # print(err.read())
 
 
